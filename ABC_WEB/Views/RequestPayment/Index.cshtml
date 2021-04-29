@@ -1,0 +1,236 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model  IPagedList<ABC_WEB.Models.RequestPList>
+@{
+    ViewBag.Title = "Index";
+}
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        form {
+            border: 3px solid #f1f1f1;
+        }
+
+        table-border {
+            border-collapse: collapse;
+        }
+
+        div.f {
+            position: absolute;
+            right: 460px;
+            top: 102px;
+            font-weight: bold;
+        }
+
+        div.e {
+            position: absolute;
+            right: 370px;
+            width: 350px;
+            height: 200px;
+            top: 220px;
+            font-weight: bold;
+        }
+
+        div.d {
+            position: absolute;
+            right: 350px;
+            width: 350px;
+            height: 200px;
+            top: 80px;
+            font-weight: bold;
+        }
+
+        div.c {
+            position: absolute;
+            right: 450px;
+            width: 350px;
+            height: 200px;
+            top: 70px;
+            font-weight: bold;
+        }
+
+        div.b {
+            position: absolute;
+            right: 370px;
+            width: 350px;
+            height: 200px;
+            top: 30px;
+            font-weight: bold;
+        }
+
+        div.a {
+            position: absolute;
+            right: 1165px;
+            width: 350px;
+            height: 250px;
+        }
+
+        p2 {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+
+</head>
+<div class="c">
+    <h4 class="p2">User: </h4>
+
+    <br /><br />
+</div>
+
+<div class="d">
+    @ViewBag.UserID
+
+    <br /><br />
+</div>
+<div class="b">
+    <br />
+
+    <br /><br /><br /><br />
+    <h4>My Current Balance USD: </h4> @ViewBag.Balance
+
+
+    <br />
+    <a href="@Url.Action("AddRequestPayment","RequestPayment")" class="btn btn-default"><i class="fa fa-plus" aria-hidden="true"></i> New Payment Request  </a>
+    <a href="@Url.Action("Index","Upload")" class="btn btn-default"><i class="fa fa-plus-square" aria-hidden="true"></i> Batch Request </a>
+</div>
+<div class="e">
+    @Html.PagedListPager(Model, i => Url.Action("Index", "RequestPayment", new { i, search = Request.QueryString["search"] }))
+</div>
+<div class="f">
+    <a href="@Url.Action("Index","Login")" class="btn btn-default"><i class="fa fa-sign-out" aria-hidden="true"></i>LOGOUT</a>
+</div>
+
+<div class="a">
+
+    <img src="~/imgs/ABC_Client.jpg" />
+
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<div class="container">
+
+    <table class="table table-hover">
+        <tr style="background-color:#87CEFA">
+
+            <th>
+                @Html.DisplayNameFor(model => model.First().Transaction_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Ref_No)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Merchant)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Acc_No)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Account_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Other_detail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Service_Fee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().PP_Remarks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Attachment)
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Transaction_Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ref_No)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Merchant)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Acc_No)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Other_detail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Service_Fee)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PP_Remarks)
+                </td>
+                @if (item.Status == "COMPLETED")
+                {
+                    <td style="background-color:greenyellow">
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                }
+                else if (item.Status == "PENDING")
+                {
+                    <td style="background-color:yellow">
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                }
+                else if (item.Status == "FAILED")
+                {
+                    <td style="background-color:red">
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                }
+                else
+                {
+                    <td style="background-color:gray">
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                }
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Attachment)
+                </td>
+
+            </tr>
+        }
+    </table>
+
+</div>
+
+
+
+
+
+
